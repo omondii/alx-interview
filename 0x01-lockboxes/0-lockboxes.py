@@ -1,4 +1,4 @@
-#!/usr/bin.python3
+#!/usr/bin/python3
 """ canUnlockAll func that checks if boxes are all unlocked """
 
 
