@@ -20,12 +20,14 @@ def validUTF8(data):
                 trailingByte = next(data)
             except StopIteration:
                 return False
-            if trailingByte is None or trailingByte >> 6 !=0b10:
+            if trailingByte is None or trailingByte >> 6 != 0b10:
                 return False
     return True
 
+
 def count_leading_ones(byte):
+    """ Helper func  """
     for i in range(8):
-        if byte >> (7 - i) == 0b11111111 >> (7 -1) & ~1:
+        if byte >> (7 - i) == 0b11111111 >> (7 - 1) & ~ 1:
             return i
         return 8
