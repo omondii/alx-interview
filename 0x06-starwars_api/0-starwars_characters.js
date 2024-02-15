@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/node
 // Consuming the starwars api
 const request = require('request')
 
