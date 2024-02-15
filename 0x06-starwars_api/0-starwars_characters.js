@@ -6,19 +6,31 @@ const movieId = process.argv[2]
 const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
 request(url, (error, response, body) => {
-    if (error) console.log(error)
+    if (error) {
+        console.log('Error:', error);
+        return
+    }
 
     console.log(response.statusCode);
-    console.log(body);
+    //console.log(body);
 
-    const text = JSON.parse(response);
-    console.log(text);
+    const data = JSON.parse(body);
+    console.log(data);
 
-    const characters = test['characters']
-    for (const character in characters){
-        names = character['name'];
-        if (names) {
-            console.log(names);
-        }
-    }
+    const characters = data['characters']
+    characters.forEach(characterUrl =>{
+        request(characterUrl, (error, response, body) => {
+            if (error) {
+                console.log('Error:', error);
+                return;
+            }
+            if (response.statusCode !== 200) {
+                console.log("Didn't fetch that!", response.statusCode);
+                return;
+            }
+
+            const charData = JSON.parse(body)
+            console.log(charData.name);
+        })
+    })
 })
