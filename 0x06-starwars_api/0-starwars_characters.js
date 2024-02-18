@@ -1,4 +1,4 @@
-#!/home/brian/.nvm/versions/node/v21.2.0/bin/node
+#!/usr/bin/node
 // Consuming the starwars api
 const starwars = () => {
     return new Promise((resolve, reject) => {
