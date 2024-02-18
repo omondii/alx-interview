@@ -1,39 +1,51 @@
-#!/usr/bin/node
+#!/home/brian/.nvm/versions/node/v21.2.0/bin/node
 // Consuming the starwars api
-const request = require('request')
+const starwars = () => {
+    return new Promise((resolve, reject) => {
+        const request = require('request');
 
-const movieId = process.argv[2];
-const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+        const movieId = process.argv[2];
+        const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
-request(url, (error, response, body) => {
-    //Error handling and failure alert
-    if (error) {
-        console.log('Error:', error);
-        return
+        request(url, (error, response, body) => {
+        if(response.statusCode !== 200){
+            reject(error)
+        }
+        const data = JSON.parse(body);
+        const CharUrls = data.characters;
+        const charPromise = CharUrls.map(char => {
+            return new Promise((resolve, reject) => {
+                request(char, (error, response, body) => {
+                    if (error){
+                        reject(error);
+                    } else {
+                        const charData = JSON.parse(body);
+                        resolve(charData.name);
+                    }
+                });
+            });
+        });
+        Promise.all(charPromise)
+            .then(characters => resolve(characters))
+            .catch(error => reject(error));
+        });
+    });
+};
+starwars().then(characters => {
+    characters.forEach(character => {
+        console.log(character);
+    });
+}).catch(error => {
+    console.log(error);
+});
+/*
+-> Using callbacks to display received response
+starwars((err, data) => {
+    console.log('Callback Fired')
+    if (err){
+        console.log(err)
+    } else {
+        console.log(data.characters)
     }
-
-    if (response.statusCode !== 200) {
-        console.log('Retry that fetch!:', response.statusCode)
-    }
-
-    //parse the received body; get only the characters field
-    const data = JSON.parse(body);
-    const characters = data['characters']
-
-    //Get each character name and list it.
-    characters.forEach(characterUrl => {
-        request(characterUrl, (error, response, body) => {
-            if (error) {
-                console.log('Error:', error);
-                return;
-            }
-            if (response.statusCode !== 200) {
-                console.log("Didn't fetch that!", response.statusCode);
-                return;
-            }
-
-            const charData = JSON.parse(body)
-            console.log(charData.name);
-        })
-    })
-})
+});
+*/
