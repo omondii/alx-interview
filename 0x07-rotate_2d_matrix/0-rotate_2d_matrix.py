@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ A func that rotates a matrix 90 degrees clockwise """
+
+
 def rotate_2d_matrix(matrix):
     """ Returns nothing """
     n = len(matrix)
@@ -9,5 +11,3 @@ def rotate_2d_matrix(matrix):
     for i in range(n):
         matrix[i] = matrix[i][::-1]
 
-    for row in matrix:
-        print(row)
