@@ -3,7 +3,12 @@
 
 
 def rotate_2d_matrix(matrix):
-    """ Returns nothing """
+    """
+    loop through each row in the outer loop
+    inner loop - Start from the current row, loop through each column
+    transpose the matrix by swapping elements at position [i][j] with [j][i]
+    Reverse each row of the transposed matrix
+    """
     n = len(matrix)
     for i in range(n):
         for j in range(i, n):
