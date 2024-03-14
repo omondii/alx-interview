@@ -3,6 +3,7 @@
 0-prime_game
 """
 def is_prime(num):
+    """ Finds the prime number in a list """
     if num < 2:
         return False
     for i in range(2, int(num ** 0.5) + 1):
@@ -11,6 +12,9 @@ def is_prime(num):
     return True
 
 def isWinner(x, nums):
+    """ Determines the winner
+    nums:array on n values x: rounds of the game
+    """
     maria_wins = 0
     ben_wins = 0
 
